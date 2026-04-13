@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Elite Restaurant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #FF6B35; --primary-dark: #E55A2B; --secondary: #2D2D2D; --white: #FFFFFF; --gray-light: #F8F9FA; --gray: #6C757D; }
+        body { font-family: 'Inter', sans-serif; color: var(--secondary); overflow-x: hidden; }
+        h1, h2, .logo { font-family: 'Playfair Display', serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        .page-transition { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); z-index: 9999; transform: scaleY(0); transform-origin: top; pointer-events: none; }
+        
+        .navbar { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-size: 28px; font-weight: 700; letter-spacing: 2px; }
+        .logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--secondary); font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .mobile-menu { display: none; font-size: 24px; cursor: pointer; }
+        
+        .page-header { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.ibb.co/MDVqtzN3/px-downloadg2f3416662660c4fe7a63d2d14f8a861012a41ccd355645660e232814323dd6fb32ab8f033808a33e3f0c9446.jpg'); background-size: cover; background-position: center; color: white; padding: 150px 0 80px; text-align: center; }
+        .page-header h1 { font-size: 56px; margin-bottom: 16px; }
+        
+        .about-content { padding: 80px 0; background: white; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .about-text h2 { font-size: 36px; margin-bottom: 20px; color: var(--primary); }
+        .about-text p { color: var(--gray); line-height: 1.8; margin-bottom: 20px; }
+        .about-image img { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        .team { background: var(--gray-light); padding: 80px 0; }
+        .team h2 { text-align: center; font-size: 48px; margin-bottom: 50px; }
+        .team h2 span { color: var(--primary); }
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .team-card { text-align: center; background: white; padding: 30px; border-radius: 20px; transition: 0.3s; }
+        .team-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .team-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; }
+        .team-card h3 { font-size: 20px; margin-bottom: 5px; }
+        .team-card p { color: var(--gray); font-size: 13px; }
+        
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.2); transition: 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        .whatsapp-float i { font-size: 32px; color: white; }
+        
+        footer { background: var(--secondary); color: #999; padding: 60px 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px; }
+        .footer-logo { font-size: 24px; font-weight: 700; font-family: 'Playfair Display', serif; margin-bottom: 15px; color: white; }
+        .footer-logo span { color: var(--primary); }
+        .footer-col h4 { color: white; margin-bottom: 20px; }
+        .footer-col a, .footer-col p { color: #999; text-decoration: none; display: block; margin-bottom: 10px; transition: 0.3s; }
+        .footer-col a:hover { color: var(--primary); }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid #444; font-size: 12px; }
+        
+        @media (max-width: 1000px) {
+            .team-grid, .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu { display: block; }
+            .about-grid { grid-template-columns: 1fr; }
+            .team-grid, .footer-grid { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-transition" id="pageTransition"></div>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo"><h1>Elite<span>Restaurant</span></h1></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+    </div>
+</nav>
+
+<div class="page-header">
+    <h1>About Us</h1>
+    <p>Discover our story and passion for exceptional dining</p>
+</div>
+
+<section class="about-content">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text">
+                <h2>Our Story</h2>
+                <p>Elite Restaurant was founded with a simple vision: to create a modern dining destination where quality food meets exceptional service. Our journey began with a passion for culinary excellence and a commitment to using the finest ingredients.</p>
+                <p>We believe that dining is more than just eating it is an experience. From our carefully curated menu to our elegant yet comfortable ambiance, every detail is designed to make your visit memorable.</p>
+                <p>Our team of talented chefs brings together international techniques with local flavors, creating dishes that surprise and delight. We source our ingredients from local farms, ensuring freshness and supporting our community.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://i.ibb.co/QvyVdQmv/px-downloadge8a1d403966f9a5fdd573890b711ba12ae256e869e6586d081c5eaac8295cea7051a2df6622acbbc624aff04.jpg" alt="Chef at work">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team">
+    <div class="container">
+        <h2>Meet Our <span>Team</span></h2>
+        <div class="team-grid">
+            <div class="team-card"><img src="https://i.ibb.co/QvyVdQmv/px-downloadge8a1d403966f9a5fdd573890b711ba12ae256e869e6586d081c5eaac8295cea7051a2df6622acbbc624aff04.jpg" alt="Executive Chef"><h3>Executive Chef</h3><p>Michael Roberts</p><p style="font-size: 12px;">20+ years experience</p></div>
+            <div class="team-card"><img src="https://i.ibb.co/QvyVdQmv/px-downloadge8a1d403966f9a5fdd573890b711ba12ae256e869e6586d081c5eaac8295cea7051a2df6622acbbc624aff04.jpg" alt="Restaurant Manager"><h3>Restaurant Manager</h3><p>Sarah Johnson</p><p style="font-size: 12px;">Hospitality expert</p></div>
+            <div class="team-card"><img src="https://i.ibb.co/QvyVdQmv/px-downloadge8a1d403966f9a5fdd573890b711ba12ae256e869e6586d081c5eaac8295cea7051a2df6622acbbc624aff04.jpg" alt="Sommelier"><h3>Sommelier</h3><p>David Chen</p><p style="font-size: 12px;">Wine specialist</p></div>
+            <div class="team-card"><img src="https://i.ibb.co/QvyVdQmv/px-downloadge8a1d403966f9a5fdd573890b711ba12ae256e869e6586d081c5eaac8295cea7051a2df6622acbbc624aff04.jpg" alt="Pastry Chef"><h3>Pastry Chef</h3><p>Emma Williams</p><p style="font-size: 12px;">Dessert artist</p></div>
+        </div>
+    </div>
+</section>
+
+<a href="https://wa.me/2348032958122" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col"><div class="footer-logo">Elite<span>Restaurant</span></div><p>Modern dining experience with quality food and excellent service.</p></div>
+            <div class="footer-col"><h4>Quick Links</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="menu.html">Menu</a><a href="contact.html">Contact</a></div>
+            <div class="footer-col"><h4>Hours</h4><p>Monday - Sunday</p><p>11:00 AM - 10:00 PM</p></div>
+            <div class="footer-col"><h4>Contact</h4><p><i class="fas fa-phone"></i> 0803 295 8122</p><p><i class="fab fa-whatsapp"></i> 0803 295 8122</p></div>
+        </div>
+        <div class="footer-bottom"><p>2026 Elite Restaurant. All rights reserved.</p></div>
+    </div>
+</footer>
+
+<script>
+    function transitionTo(url) { let tl = gsap.timeline(); tl.to("#pageTransition", { scaleY: 1, duration: 0.6, ease: "power2.inOut" }).call(() => { window.location.href = url; }); }
+    document.querySelectorAll('a').forEach(link => { if (link.hostname === window.location.hostname && link.pathname !== window.location.pathname && link.pathname !== '') { link.addEventListener('click', (e) => { e.preventDefault(); transitionTo(link.href); }); } });
+    
+    gsap.fromTo(".about-grid", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, scrollTrigger: { trigger: ".about-grid", start: "top 85%" } });
+    gsap.utils.toArray(".team-card").forEach((card, i) => { gsap.fromTo(card, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, delay: i * 0.1, scrollTrigger: { trigger: card, start: "top 85%" } }); });
+    
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+    
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileBtn && navLinks) {
+        mobileBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '80px';
+            navLinks.style.left = '0';
+            navLinks.style.width = '100%';
+            navLinks.style.backgroundColor = 'white';
+            navLinks.style.padding = '30px';
+        });
+    }
+</script>
+</body>
+</html>
